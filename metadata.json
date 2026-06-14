@@ -1,0 +1,8 @@
+{
+  "name": "Remix: DKM Masjid MAAR3",
+  "description": "Website resmi modern, responsif, dan premium untuk DKM Masjid Muniroh Abdullah Ar-Rukban 3 (MAAR3) Perumahan Orchid Green Park, Depok.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,161 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && 
+             request.auth.token.email_verified == true && 
+             request.auth.token.email == "saylhendra@gmail.com";
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // ARTIKEL COLLECTION RULES
+    match /artikel/{id} {
+      allow read, get, list: if true;
+      allow create: if isAdmin() && 
+                    isValidId(id) && 
+                    incoming().title is string && 
+                    incoming().title.size() <= 200 &&
+                    incoming().content is string &&
+                    incoming().author is string;
+      allow update: if (
+        isAdmin() && 
+        isValidId(id) && 
+        incoming().title is string && 
+        incoming().content is string && 
+        incoming().author is string
+      ) || (
+        // Allow public readers to like articles
+        incoming().diff(existing()).affectedKeys().hasOnly(['likes']) && 
+        incoming().likes is int && 
+        incoming().likes >= existing().likes
+      );
+      allow delete: if isAdmin();
+    }
+
+    // KEGIATAN COLLECTION RULES
+    match /kegiatan/{id} {
+      allow read, get, list: if true;
+      allow create, update: if isAdmin() && 
+                            isValidId(id) && 
+                            incoming().title is string && 
+                            incoming().title.size() <= 200 &&
+                            incoming().category is string &&
+                            incoming().location is string;
+      allow delete: if isAdmin();
+    }
+
+    // KAJIAN COLLECTION RULES
+    match /kajian/{id} {
+      allow read, get, list: if true;
+      allow create, update: if isAdmin() && 
+                            isValidId(id) && 
+                            incoming().ustadz is string && 
+                            incoming().theme is string && 
+                            incoming().day is string;
+      allow delete: if isAdmin();
+    }
+
+    // GALERI COLLECTION RULES
+    match /galeri/{id} {
+      allow read, get, list: if true;
+      allow create, update: if isAdmin() && 
+                            isValidId(id) && 
+                            incoming().title is string && 
+                            incoming().image is string;
+      allow delete: if isAdmin();
+    }
+
+    // CAMPAIGNS COLLECTION RULES (DONATION PROGRAMS)
+    match /campaigns/{id} {
+      allow read, get, list: if true;
+      allow create: if isAdmin() && 
+                    isValidId(id) && 
+                    incoming().title is string && 
+                    incoming().target is int && 
+                    incoming().target > 0 &&
+                    incoming().raised == 0;
+      allow update: if (
+        isAdmin() && 
+        isValidId(id) && 
+        incoming().title is string && 
+        incoming().target is int
+      ) || (
+        // Allow public visitors to incrementally donate to campaigns
+        incoming().diff(existing()).affectedKeys().hasOnly(['raised', 'donorsCount']) && 
+        incoming().raised is int && 
+        incoming().raised > existing().raised && 
+        incoming().donorsCount is int && 
+        incoming().donorsCount == existing().donorsCount + 1
+      );
+      allow delete: if isAdmin();
+    }
+
+    // DONORS COLLECTION RULES (CATATAN DONATUR)
+    match /donors/{id} {
+      allow read, get, list: if true;
+      allow create: if isValidId(id) && 
+                    incoming().campaignId is string && 
+                    incoming().amount is int && 
+                    incoming().amount >= 10000 && 
+                    incoming().name is string && 
+                    incoming().name.size() <= 100;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // PENGURUS COLLECTION RULES
+    match /pengurus/{id} {
+      allow read, get, list: if true;
+      allow create, update: if isAdmin() && 
+                            isValidId(id) && 
+                            incoming().name is string && 
+                            incoming().role is string;
+      allow delete: if isAdmin();
+    }
+
+    // UMKM COLLECTION RULES
+    match /umkm/{id} {
+      allow read, get, list: if true;
+      allow create, update: if isAdmin() && 
+                            isValidId(id) && 
+                            incoming().name is string && 
+                            incoming().owner is string &&
+                            incoming().address is string &&
+                            incoming().whatsapp is string;
+      allow delete: if isAdmin();
+    }
+
+    // CONFIG COLLECTION RULES
+    match /config/{id} {
+      allow read, get, list: if true;
+      allow create, update: if isAdmin() && 
+                            isValidId(id) && 
+                            incoming().profileVideoUrl is string;
+      allow delete: if isAdmin();
+    }
+
+  }
+}

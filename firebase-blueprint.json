@@ -1,0 +1,177 @@
+{
+  "entities": {
+    "Artikel": {
+      "title": "Artikel",
+      "description": "Artikel materi kajian keislaman dan syiar dakwah",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "title": { "type": "string", "description": "Judul artikel" },
+        "category": { "type": "string", "enum": ["Aqidah", "Fiqih", "Akhlak", "Keluarga Islami", "Dakwah"] },
+        "snippet": { "type": "string", "description": "Cuplikan singkat artikel" },
+        "content": { "type": "string", "description": "Isi lengkap artikel" },
+        "author": { "type": "string", "description": "Nama penulis atau ustadz" },
+        "date": { "type": "string", "format": "date-time", "description": "Tanggal publikasi" },
+        "readTime": { "type": "string", "description": "Durasi membaca" },
+        "image": { "type": "string", "description": "URL gambar artikel" },
+        "likes": { "type": "integer", "description": "Jumlah suka" }
+      },
+      "required": ["id", "title", "category", "snippet", "content", "author", "date", "image", "likes"]
+    },
+    "Kegiatan": {
+      "title": "Kegiatan",
+      "description": "Kegiatan kemasyarakatan dan agenda sosial rutin masjid",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "title": { "type": "string", "description": "Nama kegiatan" },
+        "category": { "type": "string", "enum": ["Kajian Islam", "Bank Sampah", "Posyandu", "SiJum", "Ogp Farm", "Ogp Sport", "KBMA", "Ramadhan", "Idul Adha", "Kopsyar OGP"] },
+        "description": { "type": "string", "description": "Deskripsi rincian kegiatan" },
+        "date": { "type": "string", "description": "Tanggal pelaksanaan" },
+        "time": { "type": "string", "description": "Jam pelaksanaan" },
+        "location": { "type": "string", "description": "Tempat pelaksanaan" },
+        "image": { "type": "string", "description": "URL gambar atau pamflet kegiatan" },
+        "status": { "type": "string", "enum": ["Mendatang", "Sedang Berjalan", "Selesai"] },
+        "youtubeUrl": { "type": "string", "description": "Link YouTube streaming atau dokumentasi" }
+      },
+      "required": ["id", "title", "category", "description", "date", "time", "location", "image", "status"]
+    },
+    "Kajian": {
+      "title": "Kajian",
+      "description": "Jadwal kajian kitab rutin syariat pekanan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "ustadz": { "type": "string", "description": "Nama lengkap narasumber Ustadz" },
+        "theme": { "type": "string", "description": "Tema kajian atau nama kitab" },
+        "time": { "type": "string", "description": "Waktu kajian" },
+        "location": { "type": "string", "description": "Lokasi majelis ilmu" },
+        "day": { "type": "string", "description": "Siklus pekanan" },
+        "image": { "type": "string", "description": "URL foto Ustadz" },
+        "youtubeUrl": { "type": "string", "description": "Link rekaman audio/video YouTube" }
+      },
+      "required": ["id", "ustadz", "theme", "time", "location", "day", "image"]
+    },
+    "Galeri": {
+      "title": "Galeri",
+      "description": "Dokumentasi foto kegiatan masjid MAAR3",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "title": { "type": "string", "description": "Judul foto dokumentasi" },
+        "category": { "type": "string", "description": "Kategori kegiatan terkait" },
+        "image": { "type": "string", "description": "URL gambar dokumentasi" },
+        "date": { "type": "string", "format": "date-time", "description": "Tanggal pengambilan foto" }
+      },
+      "required": ["id", "title", "category", "image", "date"]
+    },
+    "Campaign": {
+      "title": "Campaign",
+      "description": "Program donasi infaq pembangunan masjid",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "title": { "type": "string", "description": "Judul program pembangunan" },
+        "description": { "type": "string", "description": "Deskripsi program sosial/pembangunan" },
+        "raised": { "type": "integer", "description": "Total donasi terkumpul" },
+        "target": { "type": "integer", "description": "Target kebutuhan dana" },
+        "donorsCount": { "type": "integer", "description": "Jumlah donatur berpartisipasi" },
+        "image": { "type": "string", "description": "URL gambar program" },
+        "category": { "type": "string", "enum": ["Pembangunan", "Operasional", "Sedekah Jumat", "Program Sosial"] }
+      },
+      "required": ["id", "title", "description", "raised", "target", "donorsCount", "image", "category"]
+    },
+    "Donor": {
+      "title": "Donor",
+      "description": "Catatan donatur infaq shadaqah bersangkutan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "campaignId": { "type": "string", "description": "ID Target Program Campaign" },
+        "name": { "type": "string", "description": "Nama donatur" },
+        "amount": { "type": "integer", "description": "Nominal donasi" },
+        "date": { "type": "string", "description": "Tanggal transaksi" },
+        "message": { "type": "string", "description": "Doa, harapan atau wasiat" }
+      },
+      "required": ["id", "campaignId", "name", "amount", "date"]
+    },
+    "Pengurus": {
+      "title": "Pengurus",
+      "description": "Struktur kepengurusan DKM MAAR3",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "name": { "type": "string", "description": "Nama lengkap" },
+        "role": { "type": "string", "description": "Jabatan organisasi" },
+        "image": { "type": "string", "description": "URL foto pengurus" },
+        "phone": { "type": "string", "description": "Nomor WhatsApp" }
+      },
+      "required": ["id", "name", "role", "image"]
+    },
+    "Umkm": {
+      "title": "Umkm",
+      "description": "UMKM binaan warga komplek Orchid Green Park",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "name": { "type": "string", "description": "Nama usaha" },
+        "owner": { "type": "string", "description": "Nama pemilik" },
+        "category": { "type": "string", "enum": ["Kuliner", "Jasa", "Fashion", "Sembako", "Lainnya"] },
+        "description": { "type": "string", "description": "Deskripsi dagangan" },
+        "address": { "type": "string", "description": "Alamat rumah komplek" },
+        "whatsapp": { "type": "string", "description": "Nomor WhatsApp" },
+        "image": { "type": "string", "description": "URL gambar produk/spanduk/warung" },
+        "promo": { "type": "string", "description": "Promo aktif" }
+      },
+      "required": ["id", "name", "owner", "category", "description", "address", "whatsapp"]
+    },
+    "Config": {
+      "title": "Config",
+      "description": "Konfigurasi umum aplikasi",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier (contoh: app)" },
+        "profileVideoUrl": { "type": "string", "description": "URL video profil masjid" }
+      },
+      "required": ["id", "profileVideoUrl"]
+    }
+  },
+  "firestore": {
+    "/artikel/{id}": {
+      "schema": "Artikel",
+      "description": "Koleksi tulisan artikel materi kajian"
+    },
+    "/kegiatan/{id}": {
+      "schema": "Kegiatan",
+      "description": "Koleksi kegiatan kemasyarakatan dan agenda sosial"
+    },
+    "/kajian/{id}": {
+      "schema": "Kajian",
+      "description": "Koleksi jadwal kajian rutin"
+    },
+    "/galeri/{id}": {
+      "schema": "Galeri",
+      "description": "Koleksi dokumentasi galeri foto"
+    },
+    "/campaigns/{id}": {
+      "schema": "Campaign",
+      "description": "Koleksi program campaign donasi pembangunan"
+    },
+    "/donors/{id}": {
+      "schema": "Donor",
+      "description": "Koleksi catatan donatur infaq"
+    },
+    "/pengurus/{id}": {
+      "schema": "Pengurus",
+      "description": "Koleksi struktur organisasi pengurus"
+    },
+    "/umkm/{id}": {
+      "schema": "Umkm",
+      "description": "Koleksi UMKM binaan warga komplek Orchid Green Park"
+    },
+    "/config/{id}": {
+      "schema": "Config",
+      "description": "Koleksi parameter konfigurasi global website"
+    }
+  }
+}
