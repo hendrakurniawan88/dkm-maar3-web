@@ -135,7 +135,10 @@ export default function App() {
           });
           setArtikelList(items);
         }
-      }, (e) => console.error('Subscription error artikel: ', e)),
+      }, (e) => {
+        console.error('Subscription error artikel: ', e);
+        handleFirestoreError(e, OperationType.GET, 'artikel');
+      }),
 
       onSnapshot(collection(db, 'kegiatan'), (snapshot) => {
         if (!snapshot.empty) {
@@ -145,7 +148,10 @@ export default function App() {
           });
           setKegiatanList(items);
         }
-      }, (e) => console.error('Subscription error kegiatan: ', e)),
+      }, (e) => {
+        console.error('Subscription error kegiatan: ', e);
+        handleFirestoreError(e, OperationType.GET, 'kegiatan');
+      }),
 
       onSnapshot(collection(db, 'kajian'), (snapshot) => {
         if (!snapshot.empty) {
@@ -155,7 +161,10 @@ export default function App() {
           });
           setKajianList(items);
         }
-      }, (e) => console.error('Subscription error kajian: ', e)),
+      }, (e) => {
+        console.error('Subscription error kajian: ', e);
+        handleFirestoreError(e, OperationType.GET, 'kajian');
+      }),
 
       onSnapshot(collection(db, 'galeri'), (snapshot) => {
         if (!snapshot.empty) {
@@ -165,7 +174,10 @@ export default function App() {
           });
           setGaleriList(items);
         }
-      }, (e) => console.error('Subscription error galeri: ', e)),
+      }, (e) => {
+        console.error('Subscription error galeri: ', e);
+        handleFirestoreError(e, OperationType.GET, 'galeri');
+      }),
 
       onSnapshot(collection(db, 'campaigns'), (snapshot) => {
         if (!snapshot.empty) {
@@ -175,7 +187,10 @@ export default function App() {
           });
           setCampaignList(items);
         }
-      }, (e) => console.error('Subscription error campaigns: ', e)),
+      }, (e) => {
+        console.error('Subscription error campaigns: ', e);
+        handleFirestoreError(e, OperationType.GET, 'campaigns');
+      }),
 
       onSnapshot(collection(db, 'pengurus'), (snapshot) => {
         if (!snapshot.empty) {
@@ -185,7 +200,10 @@ export default function App() {
           });
           setPengurusList(items);
         }
-      }, (e) => console.error('Subscription error pengurus: ', e)),
+      }, (e) => {
+        console.error('Subscription error pengurus: ', e);
+        handleFirestoreError(e, OperationType.GET, 'pengurus');
+      }),
 
       onSnapshot(collection(db, 'donors'), (snapshot) => {
         if (!snapshot.empty) {
@@ -196,7 +214,10 @@ export default function App() {
           items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
           setRecentDonors(items);
         }
-      }, (e) => console.error('Subscription error donors: ', e)),
+      }, (e) => {
+        console.error('Subscription error donors: ', e);
+        handleFirestoreError(e, OperationType.GET, 'donors');
+      }),
 
       onSnapshot(collection(db, 'umkm'), (snapshot) => {
         if (!snapshot.empty) {
@@ -206,7 +227,10 @@ export default function App() {
           });
           setUmkmList(items);
         }
-      }, (e) => console.error('Subscription error umkm: ', e)),
+      }, (e) => {
+        console.error('Subscription error umkm: ', e);
+        handleFirestoreError(e, OperationType.GET, 'umkm');
+      }),
 
       onSnapshot(doc(db, 'config', 'app'), (snapshot) => {
         if (snapshot.exists()) {
@@ -215,7 +239,10 @@ export default function App() {
             setProfileVideoUrl(data.profileVideoUrl);
           }
         }
-      }, (e) => console.error('Subscription error config: ', e))
+      }, (e) => {
+        console.error('Subscription error config: ', e);
+        handleFirestoreError(e, OperationType.GET, 'config/app');
+      })
     ];
 
     return () => {
@@ -240,7 +267,7 @@ export default function App() {
     };
 
     const runAutoSeeding = async () => {
-      if (currentUser && currentUser.email === 'saylhendra@gmail.com') {
+      if (currentUser && (currentUser.email === 'saylhendra@gmail.com' || currentUser.email === 'yudhiakhtar@gmail.com')) {
         const isSeeded = localStorage.getItem('maar3_firestore_seeded_ok');
         if (!isSeeded) {
           try {
@@ -306,7 +333,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(artikelList) : action;
     setArtikelList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_artikel', JSON.stringify(newValue));
       return;
     }
@@ -332,7 +359,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(kegiatanList) : action;
     setKegiatanList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_kegiatan', JSON.stringify(newValue));
       return;
     }
@@ -358,7 +385,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(kajianList) : action;
     setKajianList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_kajian', JSON.stringify(newValue));
       return;
     }
@@ -384,7 +411,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(galeriList) : action;
     setGaleriList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_galeri', JSON.stringify(newValue));
       return;
     }
@@ -410,7 +437,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(campaignList) : action;
     setCampaignList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_campaigns', JSON.stringify(newValue));
       return;
     }
@@ -436,7 +463,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(pengurusList) : action;
     setPengurusList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_pengurus', JSON.stringify(newValue));
       return;
     }
@@ -462,7 +489,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(umkmList) : action;
     setUmkmList(newValue);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_umkm', JSON.stringify(newValue));
       return;
     }
@@ -487,7 +514,7 @@ export default function App() {
   const syncProfileVideoUrl = async (url: string) => {
     setProfileVideoUrl(url);
 
-    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || (currentUser.email !== 'saylhendra@gmail.com' && currentUser.email !== 'yudhiakhtar@gmail.com')) {
       localStorage.setItem('maar3_profile_video', url);
       return;
     }

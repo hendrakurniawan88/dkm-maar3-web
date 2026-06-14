@@ -53,7 +53,7 @@ export default function AdminDashboard({
   React.useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
       setGoogleUser(user);
-      if (user && user.email === 'saylhendra@gmail.com') {
+      if (user && (user.email === 'saylhendra@gmail.com' || user.email === 'yudhiakhtar@gmail.com')) {
         setIsAuthenticated(true);
       }
     });
@@ -361,11 +361,11 @@ export default function AdminDashboard({
     try {
       const user = await loginWithGoogle();
       if (user) {
-        if (user.email === 'saylhendra@gmail.com') {
+        if (user.email === 'saylhendra@gmail.com' || user.email === 'yudhiakhtar@gmail.com') {
           setIsAuthenticated(true);
           setErrorMessage('');
         } else {
-          setErrorMessage('Login berhasil. Hanya saylhendra@gmail.com yang memiliki hak akses tulis cloud. Anda berada dalam Mode Demo Lokal.');
+          setErrorMessage('Login berhasil. Hanya pengurus terdaftar (saylhendra@gmail.com & yudhiakhtar@gmail.com) yang memiliki hak akses tulis cloud. Anda berada dalam Mode Demo Lokal.');
           setIsAuthenticated(true);
         }
       }
