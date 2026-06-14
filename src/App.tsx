@@ -87,6 +87,16 @@ export default function App() {
   const [umkmList, setUmkmList] = useState<Umkm[]>(INITIAL_UMKM);
   const [profileVideoUrl, setProfileVideoUrl] = useState<string>('https://www.youtube.com/watch?v=6NLwziTHHy4&list=PLLrzrdSGtEBben3b7-LIzvaqjY60XFM8S');
   
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  // Set up Firebase Auth listener to make user reactive in App component
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged((usr) => {
+      setCurrentUser(usr);
+    });
+    return () => unsub();
+  }, []);
+
   const [recentDonors, setRecentDonors] = useState<Donor[]>([
     {
       id: 'don-p-1',
@@ -230,7 +240,7 @@ export default function App() {
     };
 
     const runAutoSeeding = async () => {
-      if (auth.currentUser && auth.currentUser.email === 'saylhendra@gmail.com') {
+      if (currentUser && currentUser.email === 'saylhendra@gmail.com') {
         const isSeeded = localStorage.getItem('maar3_firestore_seeded_ok');
         if (!isSeeded) {
           try {
@@ -289,14 +299,14 @@ export default function App() {
       }
     };
     runAutoSeeding();
-  }, [auth.currentUser]);
+  }, [currentUser]);
 
   // PHASE 3: SECURED TRANSACTION SYNCHRONIZATION WRAPPERS
   const syncArtikelList = async (action: React.SetStateAction<Artikel[]>) => {
     const newValue = typeof action === 'function' ? action(artikelList) : action;
     setArtikelList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_artikel', JSON.stringify(newValue));
       return;
     }
@@ -322,7 +332,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(kegiatanList) : action;
     setKegiatanList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_kegiatan', JSON.stringify(newValue));
       return;
     }
@@ -348,7 +358,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(kajianList) : action;
     setKajianList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_kajian', JSON.stringify(newValue));
       return;
     }
@@ -374,7 +384,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(galeriList) : action;
     setGaleriList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_galeri', JSON.stringify(newValue));
       return;
     }
@@ -400,7 +410,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(campaignList) : action;
     setCampaignList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_campaigns', JSON.stringify(newValue));
       return;
     }
@@ -426,7 +436,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(pengurusList) : action;
     setPengurusList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_pengurus', JSON.stringify(newValue));
       return;
     }
@@ -452,7 +462,7 @@ export default function App() {
     const newValue = typeof action === 'function' ? action(umkmList) : action;
     setUmkmList(newValue);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_umkm', JSON.stringify(newValue));
       return;
     }
@@ -477,7 +487,7 @@ export default function App() {
   const syncProfileVideoUrl = async (url: string) => {
     setProfileVideoUrl(url);
 
-    if (!auth.currentUser || auth.currentUser.email !== 'saylhendra@gmail.com') {
+    if (!currentUser || currentUser.email !== 'saylhendra@gmail.com') {
       localStorage.setItem('maar3_profile_video', url);
       return;
     }
@@ -668,7 +678,7 @@ export default function App() {
             >
               <VideoProfil 
                 videoUrl={profileVideoUrl} 
-                onUpdateVideoUrl={setProfileVideoUrl} 
+                onUpdateVideoUrl={syncProfileVideoUrl} 
                 isAdmin={true}
               />
             </motion.div>
