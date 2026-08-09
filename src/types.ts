@@ -9,8 +9,6 @@ export interface Artikel {
   readTime: string;
   image: string;
   likes: number;
-  updatedBy?: string;
-  updatedAt?: string;
 }
 
 export interface Kegiatan {
@@ -34,8 +32,6 @@ export interface Kegiatan {
   image: string;
   status: 'Mendatang' | 'Sedang Berjalan' | 'Selesai';
   youtubeUrl?: string;
-  updatedBy?: string;
-  updatedAt?: string;
 }
 
 export interface Kajian {
@@ -47,8 +43,6 @@ export interface Kajian {
   day: string;
   image: string;
   youtubeUrl?: string;
-  updatedBy?: string;
-  updatedAt?: string;
 }
 
 export interface Galeri {
@@ -57,8 +51,6 @@ export interface Galeri {
   category: Kegiatan['category'];
   image: string;
   date: string;
-  updatedBy?: string;
-  updatedAt?: string;
 }
 
 export interface DonasiCampaign {
@@ -70,8 +62,6 @@ export interface DonasiCampaign {
   donorsCount: number;
   image: string;
   category: 'Pembangunan' | 'Operasional' | 'Sedekah Jumat' | 'Program Sosial';
-  updatedBy?: string;
-  updatedAt?: string;
 }
 
 export interface Donor {
@@ -89,8 +79,6 @@ export interface Pengurus {
   role: string;
   image: string;
   phone?: string;
-  updatedBy?: string;
-  updatedAt?: string;
 }
 
 export interface SholatTime {
@@ -110,6 +98,4 @@ export interface Umkm {
   whatsapp: string;
   image?: string;
   promo?: string;
-  updatedBy?: string;
-  updatedAt?: string;
 }
