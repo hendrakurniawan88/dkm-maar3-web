@@ -4,10 +4,9 @@ import Logo from './Logo';
 
 interface FooterProps {
   onTabChange: (tab: string) => void;
-  onAdminClick: () => void;
 }
 
-export default function Footer({ onTabChange, onAdminClick }: FooterProps) {
+export default function Footer({ onTabChange }: FooterProps) {
   const handleWAOpen = () => {
     const text = 'Bismillah, saya ingin bersilaturahim dengan Pengurus DKM Masjid MAAR 3 Orchid Green Park Sawangan.';
     const url = `https://api.whatsapp.com/send?phone=6288297793000&text=${encodeURIComponent(text)}`;
@@ -196,14 +195,6 @@ export default function Footer({ onTabChange, onAdminClick }: FooterProps) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button
-              id="admin-footer-trigger"
-              onClick={onAdminClick}
-              className="hover:text-amber-300 font-extrabold uppercase tracking-widest text-[9px] hover:underline"
-            >
-              Admin Workspace Login
-            </button>
-            <span>•</span>
             <span className="flex items-center text-[10px] text-amber-400 font-bold">
               <Heart className="w-3 h-3 text-rose-500 fill-rose-500 mr-1 animate-pulse" />
               <span>Kemakmuran Umat</span>
