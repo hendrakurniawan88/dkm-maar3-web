@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Calendar, Heart, Clock, Compass, Users, BookOpen, Store } from 'lucide-react';
+import { Sparkles, Calendar, Heart, Clock, Compass, Users, BookOpen, Store, ChevronDown } from 'lucide-react';
 
 interface HeroProps {
   onTabChange: (tab: string) => void;
@@ -120,78 +120,76 @@ export default function Hero({ onTabChange }: HeroProps) {
           <p className="text-[11px] text-amber-300 font-bold uppercase tracking-widest text-center mb-5 opacity-90 mx-auto block w-full">
             Akses Cepat Layanan &amp; Informasi Kemaslahatan
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 justify-center">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3 justify-center">
             {/* Profil Button */}
             <button
               id="hero-quick-profil"
               onClick={() => onTabChange('profil')}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
             >
-              <Users className="w-5 h-5 mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
-              <span className="text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Profil</span>
+              <Users className="w-4 h-4 sm:w-5 sm:h-5 mb-1.5 sm:mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
+              <span className="text-[10px] sm:text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Profil</span>
             </button>
 
             {/* Kajian Button */}
             <button
               id="hero-quick-kajian"
               onClick={() => onTabChange('kajian')}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
             >
-              <BookOpen className="w-5 h-5 mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
-              <span className="text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Kajian</span>
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 mb-1.5 sm:mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
+              <span className="text-[10px] sm:text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Kajian</span>
             </button>
 
             {/* Kegiatan Button */}
             <button
               id="hero-quick-kegiatan"
               onClick={() => onTabChange('kegiatan')}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
             >
-              <Calendar className="w-5 h-5 mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
-              <span className="text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Kegiatan</span>
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mb-1.5 sm:mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
+              <span className="text-[10px] sm:text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Kegiatan</span>
             </button>
 
             {/* UMKM Button */}
             <button
               id="hero-quick-umkm"
               onClick={() => onTabChange('umkm')}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
             >
-              <Store className="w-5 h-5 mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
-              <span className="text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">UMKM</span>
+              <Store className="w-4 h-4 sm:w-5 sm:h-5 mb-1.5 sm:mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
+              <span className="text-[10px] sm:text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">UMKM</span>
             </button>
 
             {/* Donasi Button */}
             <button
               id="hero-quick-donasi"
               onClick={() => onTabChange('donasi')}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
             >
-              <Heart className="w-5 h-5 mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
-              <span className="text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Donasi</span>
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 mb-1.5 sm:mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
+              <span className="text-[10px] sm:text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Donasi</span>
             </button>
 
             {/* Jadwal Sholat Button */}
             <button
               id="hero-quick-jadwal"
               onClick={() => onTabChange('jadwal')}
-              className="flex flex-col items-center justify-center p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+              className="flex flex-col items-center justify-center p-2.5 sm:p-4 rounded-xl bg-emerald-900/40 hover:bg-amber-400 border border-emerald-500/20 hover:border-amber-400 group hover:text-emerald-950 transition-all duration-300 hover:scale-[1.03] cursor-pointer"
             >
-              <Clock className="w-5 h-5 mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
-              <span className="text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Jadwal Sholat</span>
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5 mb-1.5 sm:mb-2 text-amber-300 group-hover:text-emerald-950 transition-colors" />
+              <span className="text-[10px] sm:text-xs font-bold text-white group-hover:text-emerald-950 font-sans tracking-wide">Jadwal Sholat</span>
             </button>
           </div>
         </motion.div>
       </div>
 
       {/* Sleek down indicator */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center opacity-60">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center opacity-60 hover:opacity-100 transition-opacity duration-300">
         <span className="text-[10px] text-amber-200/80 font-sans tracking-widest uppercase mb-1">
           Scroll Down
         </span>
-        <div className="w-1.5 h-6 rounded-full border border-amber-300/40 flex justify-center p-[2px]">
-          <div className="w-1 h-1.5 bg-amber-400 rounded-full animate-bounce" />
-        </div>
+        <ChevronDown className="w-5 h-5 text-amber-400 animate-bounce" />
       </div>
     </div>
   );
