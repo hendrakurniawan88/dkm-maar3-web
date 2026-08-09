@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Sparkles, Lock } from 'lucide-react';
+import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
 import Logo from './Logo';
 
 interface NavbarProps {
@@ -7,7 +7,6 @@ interface NavbarProps {
   setCurrentTab: (tab: string) => void;
   darkMode: boolean;
   setDarkMode: (dark: boolean) => void;
-  onAdminClick: () => void;
 }
 
 export default function Navbar({
@@ -15,7 +14,6 @@ export default function Navbar({
   setCurrentTab,
   darkMode,
   setDarkMode,
-  onAdminClick,
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -105,16 +103,6 @@ export default function Navbar({
             >
               {darkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-emerald-200" />}
             </button>
-
-            {/* Admin Key Access Button */}
-            <button
-              id="admin-nav-button"
-              onClick={onAdminClick}
-              className="flex items-center space-x-1 px-4 py-2 rounded-full border border-amber-400/30 text-amber-300 hover:text-white hover:bg-amber-500/10 hover:border-amber-400 transition-all text-xs font-semibold uppercase tracking-wider"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>Admin Panel</span>
-            </button>
           </div>
 
           {/* Mobile Hamburguer Toggler */}
@@ -158,19 +146,7 @@ export default function Navbar({
                 {item.label}
               </button>
             ))}
-            <div className="pt-4 border-t border-emerald-800/30 dark:border-slate-800/35 flex flex-col space-y-2">
-              <button
-                id="admin-nav-button-mobile"
-                onClick={() => {
-                  onAdminClick();
-                  setIsOpen(false);
-                }}
-                className="flex items-center justify-center space-x-2 w-full py-3 rounded-lg bg-amber-500/10 border border-amber-400/40 text-amber-300 font-semibold text-sm tracking-wider uppercase"
-              >
-                <Lock className="w-4 h-4" />
-                <span>Admin Panel</span>
-              </button>
-            </div>
+            <div className="pt-4 border-t border-emerald-800/30 dark:border-slate-800/35" />
           </div>
         </div>
       )}

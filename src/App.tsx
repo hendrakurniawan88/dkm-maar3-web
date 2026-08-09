@@ -74,7 +74,13 @@ import WargaPanel from './components/WargaPanel';
 import AssetMasjid from './components/AssetMasjid';
 
 export default function App() {
-  const [currentTab, setCurrentTab] = useState<string>('beranda');
+  // URL path-based routing: /admindkmogp → admin login
+  const getTabFromPath = (): string => {
+    if (window.location.pathname === '/admindkmogp') return 'admin';
+    return 'beranda';
+  };
+
+  const [currentTab, setCurrentTab] = useState<string>(getTabFromPath());
   const [darkMode, setDarkMode] = useState<boolean>(false);
 
   // Core structured states initialized to default fallback data
@@ -96,6 +102,22 @@ export default function App() {
     });
     return () => unsub();
   }, []);
+
+  // URL path-based routing: sync browser history with tab state
+  useEffect(() => {
+    const handlePopState = () => {
+      const tab = getTabFromPath();
+      setCurrentTab(tab);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Navigate back to home
+  const navigateToHome = () => {
+    window.history.pushState({}, '', '/');
+    setCurrentTab('beranda');
+  };
 
   const [recentDonors, setRecentDonors] = useState<Donor[]>([
     {
@@ -784,7 +806,7 @@ export default function App() {
             setCampaignList={syncCampaignList}
             setPengurusList={syncPengurusList}
             setUmkmList={syncUmkmList}
-            onClose={() => setCurrentTab('beranda')}
+            onClose={navigateToHome}
           />
         );
 
@@ -802,7 +824,6 @@ export default function App() {
         setCurrentTab={setCurrentTab}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
-        onAdminClick={() => setCurrentTab('admin')}
       />
 
       {/* Main Routed Components viewport */}
@@ -813,7 +834,6 @@ export default function App() {
       {/* Footer layout */}
       <Footer
         onTabChange={setCurrentTab}
-        onAdminClick={() => setCurrentTab('admin')}
       />
 
     </div>
