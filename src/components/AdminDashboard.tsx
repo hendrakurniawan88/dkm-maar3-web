@@ -542,10 +542,12 @@ export default function AdminDashboard({
                 <button
                   id="admin-logout-btn"
                   onClick={async () => {
+                    if (!window.confirm('Apakah Anda yakin ingin keluar dari Admin Panel?')) return;
                     if (auth.currentUser) {
                       await logoutFromGoogle();
                     }
                     setIsAuthenticated(false);
+                    setGoogleUser(null);
                   }}
                   className="p-1.5 rounded-lg hover:bg-rose-600 hover:text-white text-gray-400 transition-colors cursor-pointer"
                   title="Keluar"

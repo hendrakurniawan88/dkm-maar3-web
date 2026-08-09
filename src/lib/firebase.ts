@@ -8,13 +8,18 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId); /* CRITICAL: The app will break without this line */
 export const auth = getAuth(app);
 
-// Authentication Provider Setup
-export const googleAuthProvider = new GoogleAuthProvider();
-
-// Standard login with popup function
+// Standard login with popup function.
+// Creates a fresh GoogleAuthProvider each call so setCustomParameters never
+// leaks across login attempts (prevents "blinking" popup on localhost).
 export const loginWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, googleAuthProvider);
+    const provider = new GoogleAuthProvider();
+    // Always show the account picker — forces fresh authentication and
+    // prevents silent re-authentication with a cached Google session.
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    });
+    const result = await signInWithPopup(auth, provider);
     return result.user;
   } catch (error) {
     console.error('Error logging in with Google:', error);
@@ -22,7 +27,9 @@ export const loginWithGoogle = async () => {
   }
 };
 
-// Standard logout function
+// Standard logout function — destroys Firebase Auth session.
+// The next loginWithGoogle() call will use a fresh provider with
+// prompt=select_account, ensuring the Google account picker appears.
 export const logoutFromGoogle = async () => {
   try {
     await signOut(auth);
